@@ -1,10 +1,10 @@
 <template>
-  <p>About</p>
+  <p>aa</p>
 </template>
 
 <script>
 export default {
-    name: 'About'
+    name: 'FormVuetify',
 }
 </script>
 
