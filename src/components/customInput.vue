@@ -22,7 +22,10 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
 
-
-</style>
+input {
+  width: 80%;
+  max-width: 50rem;
+}
+</style>>

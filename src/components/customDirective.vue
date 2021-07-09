@@ -22,6 +22,12 @@ directives: {
 }
 </script>
 
-<style>
+<style scoped>
+
+input {
+  width: 80%;
+  max-width: 50rem;
+}
+</style>>
 
 </style>
