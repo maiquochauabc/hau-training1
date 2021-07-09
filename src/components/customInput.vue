@@ -1,7 +1,7 @@
 <template>
   <div>
       
-    <input :value="text" @input="$emit('input', $event.target.value)" />
+    <input type="text" class="form-control" :value="text" @input="$emit('input', $event.target.value)" />
     <p>Result in child Component: {{ text }}  </p>
     
     

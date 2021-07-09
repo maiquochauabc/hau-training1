@@ -2,7 +2,7 @@
   <div>
       <h1>Directive</h1>
       
-        <input v-autofocus>
+        <input type="text" class="form-control" v-autofocus>
         <p>Auto focus in input element with directive 'v-autofocus'</p>
   </div>
 </template>

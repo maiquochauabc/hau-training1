@@ -49,7 +49,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-form-label">Username</label>
+              <label class="col-form-label">Username (API call)</label>
               <input
                 type="text"
                 name="username"
@@ -73,7 +73,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-form-label">Email</label>
+              <label class="col-form-label">Email (API call)</label>
               <input
                 type="text"
                 name="email"
@@ -95,7 +95,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-form-label">Password</label>
+              <label class="col-form-label">Password (custom vuelidation)</label>
               <input
                 type="password"
                 name="password"
@@ -186,12 +186,12 @@ Validator.extend("uniqueusername", {
     "This username is already registered, please change to another username.",
   validate: (value) => {
     if (value === "") return true;
-    if (value.length < 6 || value.length > 15) return true;
-    const rexUsername = /^[a-zA-Z0-9]*$/gm;
-    if (!rexUsername.test(value)) return true;
 
     return new Promise((resolve) => {
       if (this.debounceUserVee) clearInterval(this.debounceUserVee);
+      if (value.length < 6 || value.length > 15) return true;
+      const rexUsername = /^[a-zA-Z0-9]*$/gm;
+      if (!rexUsername.test(value)) return true;
       return (this.debounceUserVee = setTimeout((_) => {
         return axios
           .get("https://jsonplaceholder.typicode.com/users/", {
@@ -203,7 +203,7 @@ Validator.extend("uniqueusername", {
             return resolve(response.data.length === 0);
           })
           .catch((error) => {});
-      }, 500));
+      }, 1000));
     });
   },
 });
@@ -229,7 +229,7 @@ Validator.extend("uniqueemail", {
             return resolve(response.data.length === 0);
           })
           .catch((error) => {});
-      }, 500));
+      }, 1000));
     });
   },
 });

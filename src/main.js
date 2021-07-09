@@ -7,15 +7,21 @@ import customFilters from './customFilters'
 import Vuelidate from 'vuelidate'
 // import 'bootstrap/dist/css/bootstrap.min.css'
 import VeeValidate from 'vee-validate';
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import '@mdi/font/css/materialdesignicons.css'
+
 
 Vue.config.productionTip = false
 Vue.use(require('vue-moment'));
 Vue.use(Vuelidate);
 Vue.use(VeeValidate);
+Vue.use(Vuetify)
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  vuetify: new Vuetify(),
   router,
   customFilters,
   components: { App },

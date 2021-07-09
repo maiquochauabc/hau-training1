@@ -253,7 +253,7 @@ export default {
             return axios
               .get("https://jsonplaceholder.typicode.com/users/", {
                 params: {
-                  username: this.username,
+                  username: value,
                 },
               })
               .then((response) => {
@@ -261,11 +261,9 @@ export default {
                 this.checking = false;
                 return resolve(response.data.length === 0);
               })
-              .catch((error) => {
-                // resolve(true);
-                // return true;
+              .catch((error) => {              
               });
-          }, 500));
+          }, 1000));
         });
       },
     },
@@ -273,7 +271,7 @@ export default {
       required,
       email,
       isUnique(value) {
-         if (value === "") return true;
+        if (value === "") return true;
         const rexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
          if(!rexEmail.test(value)) return true
          
@@ -293,7 +291,7 @@ export default {
               .catch((error) => {
                
               });
-          }, 300));
+          }, 1000));
         });
       },
       // isEmail(value) {
@@ -328,7 +326,7 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 .form-press {
   width: 100%;
   max-width: 50rem;

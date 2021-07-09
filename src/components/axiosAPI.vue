@@ -1,9 +1,9 @@
 <template>
   <div>
     <li v-for="item in data" v-bind:key="item.id">
-      {{ item.id + ": " + item.title }}
+      {{ item.id + ": " + item.name + " - username: " + item.username}}
     </li>
-    <button v-on:click="getName()">get</button>
+    <button class="btn btn-primary" v-on:click="getName()">get (axiosAPI)</button>
   </div>
 </template>
 
@@ -14,21 +14,22 @@ export default {
   name: "axiosAPI",
   data() {
     return {
-      data: {},
+      data: [],
+      id: 1,
     };
   },
   methods: {
     async getName() {
       axios
-        .get("http://jsonplaceholder.typicode.com/posts/?userId=1")
-        .then((response) => {
-          this.data = response.data;
-          // console.log(response.data);
+        .get("https://jsonplaceholder.typicode.com/users/", {
+          params: {
+            id: this.id++,
+          },
         })
-        .catch((error) => {
-          console.log(error);
-          this.errored = true;
-        });
+        .then((response) => {
+          this.data.push(...response.data);
+        })
+        .catch((error) => {});
     },
     async getData() {
       axios.interceptors.response.use(
