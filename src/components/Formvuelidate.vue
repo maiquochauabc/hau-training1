@@ -251,7 +251,7 @@ export default {
             if (!this.username) return true;
             this.checking = true;
             return axios
-              .get("https://jsonplaceholder.typicode.com/users/", {
+              .get("https://jsonplaceholder.typicode.com/users/",  {
                 params: {
                   username: value,
                 },

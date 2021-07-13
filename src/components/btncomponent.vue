@@ -6,10 +6,10 @@
 
 export default {
     name: "btncomponent",
-data: function () {
-    return {
+data: {
+    
       count: 0
-    }
+    
   },
 }
 </script>

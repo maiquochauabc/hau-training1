@@ -16,7 +16,6 @@
               label="First name"
               required
               outlined
-             
             ></v-text-field>
           </v-col>
 
@@ -28,7 +27,6 @@
               label="Last name"
               required
               outlined
-              
             ></v-text-field>
           </v-col>
         </v-row>
@@ -44,27 +42,25 @@
             usernameRules.unique,
           ]"
           :messages="userMessage"
-          @input="isUniqueUser(username)"        
+          @input="isUniqueUser(username)"
           label="User Name (API call)"
           outlined
-         
         ></v-text-field>
         <v-text-field
           v-model="email"
-          :rules="[emailRules.require,emailRules.format,emailRules.unique]"
-           :messages="emailMessage"
+          :rules="[emailRules.require, emailRules.format, emailRules.unique]"
+          :messages="emailMessage"
           @input="isUniqueEmail(email)"
           counter
           label="E-mail (API call)"
           required
           outlined
-         
         ></v-text-field>
 
         <v-text-field
           v-model="password"
           :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
-          :rules="passwordRules"           
+          :rules="passwordRules"
           :type="showpassword ? 'text' : 'password'"
           name="input-10-1"
           label="password (custom vuelidation)"
@@ -74,7 +70,6 @@
           class="input-group--focused"
           required
           outlined
-        
         ></v-text-field>
         <v-text-field
           v-model="repeatpassword"
@@ -87,7 +82,6 @@
           @click:append="showpassword = !showpassword"
           required
           outlined
-        
         ></v-text-field>
         <v-btn class="mr-4" type="submit" :disabled="!valid" color="success">
           submit {{ submitstatus }}
@@ -106,9 +100,7 @@
 const axios = require("axios");
 export default {
   name: "FormVuetify",
-  components: {
-   
-  },
+  components: {},
 
   data() {
     return {
@@ -132,7 +124,7 @@ export default {
         (v) => v.length >= 2 || "Last Name must be than 2 characters",
       ],
       userMessage: "",
-     
+
       usernameRules: {
         require: (v) => !!v || "User Name is required",
         min: (v) =>
@@ -153,14 +145,15 @@ export default {
           ) || "E-mail is incorrect format",
         unique: (v) => true || this.emailMessage,
       },
-      passwordRules: [(v) => !!v || "Password is required",
-       (v) => v.length <= 15 || "Password must be less than 15 characters",
-       (v) => v.length >= 6 || "Password must be than 6 characters",
-      (v) =>
+      passwordRules: [
+        (v) => !!v || "Password is required",
+        (v) => v.length <= 15 || "Password must be less than 15 characters",
+        (v) => v.length >= 6 || "Password must be than 6 characters",
+        (v) =>
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?!.*[\s]).{6,}$/.test(
             v
-          ) || "Password must contain at least 1 uppercase character, 1 lowercase character, 1 number, 1 special character and NOT contain white spaces.",
-     
+          ) ||
+          "Password must contain at least 1 uppercase character, 1 lowercase character, 1 number, 1 special character and NOT contain white spaces.",
       ],
       repeatpasswordRules: [
         (v) => !!v || "Repeat Password is required",
@@ -171,68 +164,65 @@ export default {
   computed: {},
 
   methods: {
-      isUniqueUser(value) {
+    isUniqueUser(value) {
       this.userMessage = "";
-      this.usernameRules.unique = true;
-      //  console.log(rexUsername.test(value));
-     return new Promise((resolve) => {
-       if (this.debounceUsername) clearInterval(this.debounceUsername);
-       return this.debounceUsername = setTimeout((_) => {
-         if (!this.username) return true;   
-         if (value === "") return true;
-         if (value.length < 6 || value.length > 15) return true;
-         const rexUsername = /^[a-zA-Z0-9]*$/gm;
-         if (!rexUsername.test(value)) return true;
-        return  axios.get("https://jsonplaceholder.typicode.com/users/", {
+      this.usernameRules.unique = true;     
+      return new Promise((resolve) => {
+        if (this.debounceUsername) clearInterval(this.debounceUsername);
+        return (this.debounceUsername = setTimeout((_) => {
+          if (!this.username) return true;
+          if (value === "") return true;
+          if (value.length < 6 || value.length > 15) return true;
+          const rexUsername = /^[a-zA-Z0-9]*$/gm;
+          if (!rexUsername.test(value)) return true;
+          return axios
+            .get("https://jsonplaceholder.typicode.com/users/", {
               params: {
                 username: value,
               },
+              // showLoader: false,
             })
             .then((response) => {
-              
               if (response.data.length > 0) {
                 this.usernameRules.unique = false;
                 this.userMessage =
                   "This username is already registered, please change to another username.";
               }
             })
-            .catch((error) => {
-             
-            });
-        }, 2000);
+            .catch((error) => {});
+        }, 1000));
       });
     },
 
-     isUniqueEmail(value) {
-       this.emailRules.unique = true;
-       this.emailMessage ="";                 
+    isUniqueEmail(value) {
+      this.emailRules.unique = true;
+      this.emailMessage = "";
 
-         if (value === "") return true;
-        const rexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-         if(!rexEmail.test(value)) return true
-        return new Promise((resolve) => {
-          if (this.debounceEmail) clearInterval(this.debounceEmail);
-          return (this.debounceEmail = setTimeout((_) => {
-            if (!this.email) return true;            
-            return axios
-              .get("https://jsonplaceholder.typicode.com/users/", {
-                params: {
-                  email: value,
-                },
-              })
-              .then((response) => {               
-                 if (response.data.length > 0) {
+      if (value === "") return true;
+      const rexEmail =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!rexEmail.test(value)) return true;
+      return new Promise((resolve) => {
+        if (this.debounceEmail) clearInterval(this.debounceEmail);
+        return (this.debounceEmail = setTimeout((_) => {
+          if (!this.email) return true;
+          return axios
+            .get("https://jsonplaceholder.typicode.com/users/", {
+              params: {
+                email: value,
+              },
+            })
+            .then((response) => {
+              if (response.data.length > 0) {
                 this.emailRules.unique = false;
                 this.emailMessage =
                   "This email is already registered, please change to another email.";
               }
-              })
-              .catch((error) => {
-               
-              });
-          }, 2000));
-        });
-      },
+            })
+            .catch((error) => {});
+        }, 1000));
+      });
+    },
     submitForm() {
       if (!this.$refs.form.validate()) {
         this.submitstatus = "FAIL";

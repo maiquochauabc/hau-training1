@@ -10,6 +10,9 @@ import VeeValidate from 'vee-validate';
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import '@mdi/font/css/materialdesignicons.css'
+import store from  './store/index' // vuex store instance
+
+
 
 
 Vue.config.productionTip = false
@@ -17,12 +20,15 @@ Vue.use(require('vue-moment'));
 Vue.use(Vuelidate);
 Vue.use(VeeValidate);
 Vue.use(Vuetify)
+const axios = require("axios");
+axios.defaults.showLoader = true;
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   vuetify: new Vuetify(),
   router,
+  store,
   customFilters,
   components: { App },
   template: '<App/>'

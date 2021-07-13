@@ -9,6 +9,8 @@ import reusableComponents from '@/components/reusableComponents'
 import TwoWayBinding from '@/components/TwoWayBinding'
 import customDirective from '@/components/customDirective'
 import FormProcessing from '@/components/FormProcessing'
+import LoadingCallAPI from '@/components/LoadingCallAPI'
+import ProductList from '@/components/ProductComponent/ProductList'
 
 
 Vue.use(Router)
@@ -59,6 +61,16 @@ export default new Router({
       path: '/form-processing',
       name: 'FormProcessing',
       component: FormProcessing      
+    },
+    {
+      path: '/loading-call-api',
+      name: 'LoadingCallAPI',
+      component: LoadingCallAPI      
+    },
+    {
+      path: '/products',
+      name: 'ProductList',
+      component: ProductList      
     },
   ],
   mode: 'history'
