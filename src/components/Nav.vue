@@ -29,6 +29,9 @@
         <li class="menu__item">
         <router-link  class="menu__link" :to="{ name: 'LoadingCallAPI' }">Loading when wait to call API</router-link>
         </li>
+        <li class="menu__item">
+        <router-link  class="menu__link" :to="{ name: 'ProductList' }">Product List (store module VueX)</router-link>
+        </li>
 
       </ul>
     </nav>
