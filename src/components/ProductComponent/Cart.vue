@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div class="cart__group">
       <div class="cart">
         <span class="cart__title">
@@ -13,7 +14,7 @@
             <ul class="cart__list">
               <li
                 class="cart__item"
-                v-for="cart in productincart.slice(0, 6)"
+                v-for="cart in productincartlimit"
                 :key="cart.product.id"
               >
                 <img :src="cart.product.image" alt="" />
@@ -22,15 +23,19 @@
                     {{ cart.product.title | shorttitle }}
                   </p>
                   <p>
-                    {{ cart.quality + " X $" + cart.product.price }}
+                    {{ cart.quality + " " }} <span> X ${{ cart.product.price | shortprice}}</span>
                   </p>
                 </div>
                 <div class="cart__button">
-                  ${{ cart.product.price * cart.quality }}
+                  ${{ cart.product.price * cart.quality | shortprice}}
                   <button @click="removefromcart(cart.product)">Remove</button>
                 </div>
               </li>
-              <li>View all</li>
+              <li v-if="cartqualitymore > 0"> +{{cartqualitymore}} other product<span v-if="cartqualitymore > 1">s</span></li>
+              <div class="button">                
+                  <button class="btn btn-primary" @click="removeallfromcart()">Remove all</button>
+                  <button class="btn btn-success" click="fd">Check Out</button>
+                </div>
             </ul>
           </v-card-title>
         </v-card>
@@ -40,7 +45,6 @@
 </template>
 
 <script>
-import product from "../../store/modules/product";
 export default {
   computed: {
     cartquality() {
@@ -53,6 +57,16 @@ export default {
     productincart() {
       return this.$store.state.cart.cart;
     },
+    productincartlimit() {
+      return this.$store.state.cart.cart.slice(0, 6);
+    },
+    cartqualitymore(){        
+        let cartnumber = 0;
+      this.productincartlimit.forEach((item) => {
+        cartnumber += item.quality;
+      });
+      return this.cartquality - cartnumber;
+    }
   },
   methods: {
       removefromcart(product){
@@ -60,6 +74,9 @@ export default {
         product: product,
        
       });
+      },
+      removeallfromcart(){
+          this.$store.dispatch("cart/removeallfromCart");
       }
   },
   filters: {
@@ -72,6 +89,10 @@ export default {
         return value.substring(0, 30).toString() + "...";
       }
     },
+    shortprice: function (value) {
+      let val = (value/1).toFixed(2).replace('.', ',')
+       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    },
   },
 };
 </script>
@@ -79,7 +100,7 @@ export default {
 <style scope>
 .cart__group {
   position: fixed;
-  right: 5rem;
+  right: 2rem;
   z-index: 2;
 }
 .cart__group:visited,
@@ -87,7 +108,7 @@ export default {
   display: block;
 }
 .cart {
-  background-color: rgba(128, 128, 128, 0.212);
+  background-color: rgba(128, 128, 128, 0.5);
   padding: 1rem 2rem;
   border-radius: 1rem;
 }
@@ -143,5 +164,11 @@ export default {
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-end;
+}
+.button{
+    display: flex;
+     justify-content: flex-end;
+     gap: 2rem;
+     margin-top: 1rem;
 }
 </style>

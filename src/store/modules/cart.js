@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export  const cart = {
     namespaced: true,   
     state: {
@@ -13,13 +11,16 @@ export  const cart = {
         },
         removefromCart({commit}, {product}){
             commit('REMOVE_CART', {product})
+        },
+        removeallfromCart({commit}){
+            commit('REMOVE_ALL_CART')
         }
       
     },
     mutations: {
-        SET_CARTS(state, products) {
-            state.products = products;
-        },
+        // SET_CARTS(state, products) {
+        //     state.products = products;
+        // },
         ADD_CART(state, {product, quality}) {
             let productincart = state.cart.find(item => {
                 return item.product.id === product.id;
@@ -29,7 +30,7 @@ export  const cart = {
                 saveState(state.cart)
                 return
             }
-            state.cart.push({
+            state.cart.unshift({
                 product,
                 quality
             })
@@ -42,6 +43,11 @@ export  const cart = {
             })            
             saveState(state.cart)
             // console.log(state.cart.length)
+        },
+        REMOVE_ALL_CART(state) {
+            state.cart = [];
+            saveState(state.cart)
+            
         },
       
         

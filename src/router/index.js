@@ -11,6 +11,7 @@ import customDirective from '@/components/customDirective'
 import FormProcessing from '@/components/FormProcessing'
 import LoadingCallAPI from '@/components/LoadingCallAPI'
 import ProductList from '@/components/ProductComponent/ProductList'
+import ProductDetail from '@/components/ProductComponent/ProductDetail'
 
 
 Vue.use(Router)
@@ -70,8 +71,22 @@ export default new Router({
     {
       path: '/products',
       name: 'ProductList',
-      component: ProductList      
+      component: ProductList,
+      // children: [
+      //   {
+      //     path: '/products:id',
+      //     name: 'ProductDetail',
+      //     component: ProductDetail      
+      //   },
+      // ]      
     },
+    {
+      path: '/product/:id',
+      name: 'ProductDetail',
+      component: ProductDetail,
+      props: true,      
+    },
+    
   ],
   mode: 'history'
 })

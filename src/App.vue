@@ -28,8 +28,8 @@ export default {
     axios.interceptors.request.use(
       function (config) {
         if (config.showLoader) {
-          // store.commit('LOADER',true)
           store.dispatch("loader/pending");
+          // store.commit('LOADER',true);
         }
         return config;
       },
