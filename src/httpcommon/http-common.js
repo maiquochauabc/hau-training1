@@ -2,11 +2,11 @@ import axios from 'axios';
 import store from "../store";
 
 export const HTTP = axios.create({
-  baseURL: `https://fakestoreapi.com/`,
+  baseURL: `http://localhost:3000/`,
   // baseURL: `https://60ed42bea78dc700178adda3.mockapi.io/api/`,
-  headers: {
-    Authorization: 'Bearer {token}'
-  }
+  // headers: {
+  //   Authorization: 'Bearer {token}'
+  // }
 })
 HTTP.defaults.showLoader = true;
 HTTP.interceptors.request.use(

@@ -12,6 +12,9 @@ import FormProcessing from '@/components/FormProcessing'
 import LoadingCallAPI from '@/components/LoadingCallAPI'
 import ProductList from '@/components/ProductComponent/ProductList'
 import ProductDetail from '@/components/ProductComponent/ProductDetail'
+import CheckOut from '@/components/ProductComponent/CheckOut'
+import ProductAdmin from '@/components/ProductAdmin/ProductAdmin'
+import LoginAdmin from '@/components/ProductAdmin/LoginAdmin'
 
 
 Vue.use(Router)
@@ -86,7 +89,45 @@ export default new Router({
       component: ProductDetail,
       props: true,      
     },
+    {
+      path: '/check-out',
+      name: 'CheckOut',
+      component: CheckOut,         
+    },
+    {
+      path: '/admin',
+      name: 'LoginAdmin',
+      beforeEnter: ifNotAuthenticated,
+      component: LoginAdmin,         
+    },    
+    {
+      path: '/admin/product-admin',
+      name: 'ProductAdmin',
+      beforeEnter: ifAuthenticated,         
+      component: ProductAdmin,
+    },
+    {
+      path: '/admin/*',
+      beforeEnter: (to, from, next) => {
+        next('/admin');
+      }
+    }
     
   ],
   mode: 'history'
-})
+});
+import store from '../store'
+
+function ifAuthenticated(to, from, next) {
+  if (store.state.adminuser.isAuthenticated) {  
+    return next();
+  }
+  return next('/admin');
+};
+
+function ifNotAuthenticated (to, from, next){
+  if (!store.state.adminuser.isAuthenticated) {
+    return next();
+  }
+  return next('/admin/product-admin');
+};

@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import customFilters from './customFilters'
+import customDirectives from './customDirectives'
 import Vuelidate from 'vuelidate'
 // import 'bootstrap/dist/css/bootstrap.min.css'
 import VeeValidate from 'vee-validate';
@@ -30,6 +31,7 @@ new Vue({
   router,
   store,
   customFilters,
+  customDirectives,
   components: { App },
   template: '<App/>'
 })

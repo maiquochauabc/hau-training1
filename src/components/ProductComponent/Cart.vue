@@ -34,7 +34,10 @@
               <li v-if="cartqualitymore > 0"> +{{cartqualitymore}} other product<span v-if="cartqualitymore > 1">s</span></li>
               <div class="button">                
                   <button class="btn btn-primary" @click="removeallfromcart()">Remove all</button>
-                  <button class="btn btn-success" click="fd">Check Out</button>
+                  <router-link class="link"  :to="{name: 'CheckOut'}">
+     <button class="btn btn-success" click="fd">Check Out</button>
+      </router-link>
+                  
                 </div>
             </ul>
           </v-card-title>

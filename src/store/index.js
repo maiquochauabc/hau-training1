@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import { loader } from "./modules/loader";
 import { product } from "./modules/product";
 import { cart } from "./modules/cart";
+import { adminuser } from "./modules/adminuser";
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     loader,
     product,
     cart,
+    adminuser,
   },
   state: {
     loading: false
